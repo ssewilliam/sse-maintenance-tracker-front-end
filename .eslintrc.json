@@ -1,12 +1,15 @@
 {
     "env": {
         "browser": true,
-        "es6": true
+        "es6": true,
+        "jest/globals": true
     },
+    "plugins": ["jest"],
     "parser": "babel-eslint",
     "extends": [
         "eslint:recommended",
-         "plugin:react/recommended"
+        "plugin:react/recommended",
+        "plugin:jest/recommended"
     ],
     "parserOptions": {
         "ecmaVersion": 2015

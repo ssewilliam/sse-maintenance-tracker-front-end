@@ -1,1 +1,3 @@
 # sse-maintenance-tracker-front-end
+
+[![Build Status](https://travis-ci.org/ssewilliam/sse-maintenance-tracker-front-end.svg?branch=develop)](https://travis-ci.org/ssewilliam/sse-maintenance-tracker-front-end)    [![CircleCI](https://circleci.com/gh/ssewilliam/sse-maintenance-tracker-front-end/tree/develop.svg?style=svg)](https://circleci.com/gh/ssewilliam/sse-maintenance-tracker-front-end/tree/develop)
