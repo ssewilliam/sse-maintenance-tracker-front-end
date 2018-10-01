@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
-import LoginRegisterImage from '../../../src/components/Forms/LoginRegisterImage/LoginRegisterImage';
-
 import '../../CSS/style.css';
+import Logo from '../../images/mt-logo.jpg';
 
 class Login extends Component {
   render () {
     return(
       < div className="login_register_wrap">
-        <LoginRegisterImage />
+        <div className="login_register_top">
+          <div className="login_register_logo">
+            <img src={Logo} className="img_class" alt="maintenace tracker" />
+          </div>
+        </div>
         <h2 className="title text-center">User Login</h2>
         <form action="requests.html" autoComplete="off">
           <div className="form_group">
@@ -23,7 +26,7 @@ class Login extends Component {
           <div className="form_group">
             <input type="submit" value="Login" />
             <span className="not-a-member">
-                    Not a member, <a href="/register">register</a>
+                    Not a member, <a href="register.html">register</a>
             </span>
             <span className="not-a-member">
                     OR

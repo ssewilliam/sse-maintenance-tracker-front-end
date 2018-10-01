@@ -1,19 +1,9 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import { BrowserRouter } from 'react-router-dom';
+import ReactDOM from 'react-dom';
 import Login from '../../containers/Login/Login';
 
-describe('Login', () => {
-  let parentWrapper, wrapper;
-  beforeEach(() => {
-    parentWrapper = mount(
-      <BrowserRouter>
-        <Login />
-      </BrowserRouter>);
-      wrapper = parentWrapper.find(Login);
-    });
-  it('renders without crashing', () => {
-    const numDivs = wrapper.find('div')
-    expect(numDivs.length).toBe(6);
-  });
+it('renders without crashing', () => {
+  const div = document.createElement('div');
+  ReactDOM.render(<Login />, div);
+  ReactDOM.unmountComponentAtNode(div);
 });
