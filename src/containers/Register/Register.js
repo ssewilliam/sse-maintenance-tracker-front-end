@@ -114,7 +114,6 @@ export class Register extends Component {
             : <LoginRegisterImage />
         }
         <h2 className="title text-center">User Registration</h2>
-        {/* <div className="loader"></div> */}
         <form id="registractionForm" autoComplete="Off" action="login.html" method="post"
           onSubmit={event => this.onRegistrationSubmitEventHandler(event)}
         >

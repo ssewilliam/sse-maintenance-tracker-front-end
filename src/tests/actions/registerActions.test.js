@@ -50,15 +50,6 @@ describe('registerActions', () => {
     expect(wrapper.props().registrationStatus).toBe(false);
   });
 
-  it('should roll the dice again when button is clicked', () => {
-
-    // wrapper.dive();
-    // console.log(wrapper.props().registrationStatus);
-    // const actions = store.getActions();
-    // console.log(actions);
-    // expect(actions).toEqual([ { type: 'ROLL_DICE' } ]);
-    // expect(wrapper1.props().registrationStatus).toBe(false);
-  });
   it('should start registration and end with success', () => {
     moxios.stubRequest(AppUrls.register, {
       status: 201,
