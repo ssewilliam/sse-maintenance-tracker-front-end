@@ -1,9 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { mount } from 'enzyme';
 import Home from '../../containers/Home/Home';
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render( <Home /> , div);
-  ReactDOM.unmountComponentAtNode(div);
+it('should logout users', () => {
+  const wrapper = mount(<Home history={{push: jest.fn()}} />);
+  wrapper.instance().signOut();
+  const username = localStorage.getItem('username');
+  expect(username).toBe(false);
 });

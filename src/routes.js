@@ -14,7 +14,7 @@ export const Routes = (props) => {
       <div>
         <Navbar />
         <Switch>
-          <Route path="/" exact component={Home} />
+          <Route path="/" exact component={Home} {...props} />
           <Route path="/login" exact component={Login} />
           <Route path="/register" exact component={Register} />
           <Route path="/" exact component={authStatus ? Home : Login} /> 
