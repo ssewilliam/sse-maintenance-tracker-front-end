@@ -70,8 +70,8 @@ textarea{
     text-align: center
 }
 .login_register_wrap .login_register_logo {
-    max-width:100px;
-    height:100px;
+    max-width:90px;
+    height:90px;
     overflow:hidden;
     margin:auto;
     border: 2px solid #49B4FA;
@@ -405,4 +405,11 @@ dl dd {
     height: 100%;
     top: 0;
     bottom: 0;
+    overflow: scroll;
+}
+.hidden {
+    display: none;
+}
+.show {
+    display: block;
 }

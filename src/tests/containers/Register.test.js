@@ -17,9 +17,9 @@ describe('Register', () => {
     wrapper = parentWrapper.find(Register);
     jest.spyOn(event, 'preventDefault');
 
-    username = wrapper.find('input[name="username"]');
-    email = wrapper.find('input[name="email"]');
-    password = wrapper.find('input[name="password"]');
+    username = wrapper.find('#registerUsername');
+    email = wrapper.find('#registerEmail');
+    password = wrapper.find('#registerPassword');
   });
 
   it('should call eventListener', () => {
@@ -28,7 +28,7 @@ describe('Register', () => {
     username.simulate('change', { target: { value: 'username', name: 'username' } });
     email.simulate('change', { target: { value: 'user@mail.com', name: 'email' } });
     password.simulate('change', { target: { value: 'password', name: 'password' } });
-
+    
     expect(spy).toHaveBeenCalled();
     expect(spy).toHaveBeenCalledTimes(3);
     expect(wrapper.instance().state.hasFocus.username).toBeTruthy();
@@ -82,26 +82,43 @@ describe('Register', () => {
     });
   });
 
-  it('onregistrationsubmit', async () => {
-    const spy = jest.spyOn(wrapper.instance(), 'onRegistrationSubmitEventHandler');
-    wrapper.find('form').simulate('submit');
-    expect(spy).toHaveBeenCalled();
-    expect(wrapper.instance().onRegistrationSubmitEventHandler).toHaveBeenCalled();
-  });
+  describe('registraction form submit',() => {
+    let spyRegistrationEvent, spyValidationHandler;
+    beforeEach(() =>{
+      spyRegistrationEvent = jest.spyOn(wrapper.instance(), 'onRegistrationSubmitEventHandler');
+      spyValidationHandler = jest.spyOn(wrapper.instance(), 'validationHandler');
+    });
 
-  it('onregistrationsubmit34', async () => {
-    const spy = jest.spyOn(wrapper.instance(), 'onRegistrationSubmitEventHandler');
-    const spy3 = jest.spyOn(wrapper.instance(), 'validationHandler');
-    username.instance().value = 'sampleUser';
-    username.simulate('change');
-    email.instance().value = 'user@mail.com';
-    email.simulate('change');
-    password.instance().value = 'rightPassword';
-    password.simulate('change');
-    wrapper.find('form').simulate('submit');
-    expect(spy).toHaveBeenCalled();
-    expect(spy3).toHaveBeenCalled();
-    expect(spy3).toHaveBeenCalledTimes(9);
-    expect(wrapper.instance().onRegistrationSubmitEventHandler).toHaveBeenCalled();
+    it('should call onRegistrationSubmitEventHandler', async () => {
+      wrapper.find('#registractionForm').simulate('submit');
+      expect(spyRegistrationEvent).toHaveBeenCalled();
+      expect(wrapper.instance().onRegistrationSubmitEventHandler).toHaveBeenCalled();
+    });
+
+    it('should call validationHandler 15 times', async () => {
+      username.instance().value = 'sampleUser';
+      username.simulate('change');
+      email.instance().value = 'user@mail.com';
+      email.simulate('change');
+      password.instance().value = 'rightPassword';
+      password.simulate('change');
+      wrapper.find('#registractionForm').simulate('submit');
+      expect(spyRegistrationEvent).toHaveBeenCalled();
+      expect(spyValidationHandler).toHaveBeenCalled();
+      expect(spyValidationHandler).toHaveBeenCalledTimes(15);
+      expect(wrapper.instance().onRegistrationSubmitEventHandler).toHaveBeenCalled();
+    });
+  });
+  describe('toggle',() => {
+    it('should switch to tab 1', () =>{
+      const tab1 = wrapper.find('NavLink').first();
+      tab1.simulate('click');
+      expect(wrapper.instance().state.activeTab).toBe('1');
+    });
+    it('should switch to tab 2',() => {
+      const tab2 = wrapper.find('NavLink[name="tab2"]');
+      tab2.simulate('click');
+      expect(wrapper.instance().state.activeTab).toBe('2');
+    });
   });
 });
