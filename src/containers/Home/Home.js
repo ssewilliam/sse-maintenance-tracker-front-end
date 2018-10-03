@@ -7,7 +7,6 @@ class Home extends Component {
   constructor(props) {
     super(props);
   }
-
   static propTypes = {
     history: PropTypes.shape(historyPropTypes),
   }
