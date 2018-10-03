@@ -4,11 +4,11 @@ import thunk from 'redux-thunk';
 import sinon from 'sinon';
 import moxios from 'moxios';
 import { shallow } from 'enzyme';
-import { registerUser } from '../../store/actions/registerAction';
+import { loginUser } from '../../store/actions/loginAction';
 import {
-  USER_REGISTRATION_START,
-  USER_REGISTRATION_SUCCESS,
-  USER_REGISTRATION_FAIL,
+  USER_LOGIN_START,
+  USER_LOGIN_SUCCESS,
+  USER_LOGIN_FAIL
 } from '../../store/actions/actionTypes';
 import AppUrls from '../../AppUrls';
 import Register from '../../containers/Register/Register';
@@ -18,10 +18,12 @@ const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
 const userData = {
-  username:'mems'
+  user:{
+    loginUsername: 'mems',
+  }
 };
 
-describe('registerActions', () => {
+describe('loginActions', () => {
   let store, wrapper;
   beforeEach(() => {
     moxios.install();
@@ -39,62 +41,60 @@ describe('registerActions', () => {
     wrapper = shallow(
       <Register store={store} />
     );
-    localStorage.removeItem('isLoggedIn');
   });
 
   afterEach(() => {
     moxios.uninstall();
   });
 
-  it('should start with initial registerLogin state as false', () => {
-    expect(wrapper.props().registrationStatus).toBe(false);
+  it('should start with initial login state as false', () => {
+    expect(wrapper.props().loginStatus).toBe(false);
   });
 
-  it('should start registerLogin and end with success', () => {
-    moxios.stubRequest(AppUrls.register, {
-      status: 201,
-      response: { message: 'Successful signup' },
+  it('should start login and end with success', () => {
+    moxios.stubRequest(AppUrls.login, {
+      status: 200,
+      response: { message: 'Successfully Logged in' },
     });
 
     const expectedActions = [
-      { type: USER_REGISTRATION_START },
+      { type: USER_LOGIN_START },
       {
-        payload: 'Successful signup',
-        type: USER_REGISTRATION_SUCCESS,
+        payload: 'Successfully Logged in',
+        type: USER_LOGIN_SUCCESS,
       },
     ];
-    return store.dispatch(registerUser(userData)).then(() => {
+    return store.dispatch(loginUser(userData)).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
     });
   });
 
-  it('should start registerLogin and end with fail', () =>{
-    moxios.stubRequest(AppUrls.register, {
+  it('should start login`and end with fail', () =>{
+    moxios.stubRequest(AppUrls.login, {
       status:400,
       response: { error: 'user registeration failed' },
     });
     const expectedActions = [
-      { type: USER_REGISTRATION_START }, 
-      { type: USER_REGISTRATION_FAIL,
+      { type: USER_LOGIN_START }, 
+      { type: USER_LOGIN_FAIL,
         payload: 'errors' }];
 
     const store = mockStore();
-    return store.dispatch(registerUser(userData)).catch(() => {
+    return store.dispatch(loginUser(userData)).catch(() => {
       expect(store.getActions()).toEqual(expectedActions);
     }); 
   });
 
   describe('Map Dispatch To Props', () => {
-    it('should call onRegister action', () => {
+    it('should call onLogin action', () => {
       const user = {
         username:'meme',
-        email:'me@mail.com',
         password:'@password'
       };
       const dispatchSpy = sinon.spy();
-      const { onRegister } = mapDispatchToProps(dispatchSpy);
-      onRegister();
-      const expectedAction = registerUser(user);
+      const { onLogin } = mapDispatchToProps(dispatchSpy);
+      onLogin();
+      const expectedAction = loginUser(user);
       const spyLastCall = dispatchSpy.args[0][0];
       expect(spyLastCall.types).toBe(expectedAction.types);
     });

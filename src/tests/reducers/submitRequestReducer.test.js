@@ -18,7 +18,7 @@ describe('submitRequestReducer', () => {
     expect(newState).toEqual(initialState);
   });
   
-  it('should change loading to true when registration starts', () => {
+  it('should change loading to true when registerLogin starts', () => {
     const action = { type: REQUEST_CREATION_START };
     const newState = submitRequestReducer(initialState, action);
     expect(newState.loading).toEqual(true);

@@ -22,14 +22,13 @@ export const userRegistrationFail = errors => {
     payload: errors,
   };
 };
-export const registerUser = (userData, history) => {
+export const registerUser = (userData) => {
   return dispatch => {
     dispatch(userRegistrationStart());
     return axios
       .post(AppUrls.register, userData.user)
       .then(response => {
         dispatch(userRegistrationSuccess(response.data.message));
-        setTimeout(() => history.push('/login'), 3000);
       })
       .catch((error) => {
         dispatch(userRegistrationFail(error.response.data));

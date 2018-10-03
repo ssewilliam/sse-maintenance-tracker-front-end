@@ -9,7 +9,7 @@ import registerReducer from './registerReducer';
 import submitRequestReducer from './submitRequestReducer';
 
 const rootReducer = combineReducers({
-  registration: registerReducer,
+  registerLogin: registerReducer,
   postRequest: submitRequestReducer,
 });
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
