@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import Home from './containers/Home/Home';
 import Login from './containers/Login/Login';
 import Register from './containers/Register/Register';
+import SubmitRequest from './containers/Requests/SubmitRequest/SubmitRequest';
 import Navbar from './components/Navbar/Navbar';
-
 export const Routes = (props) => {
   const { authStatus } = props;
   return (
@@ -18,6 +18,7 @@ export const Routes = (props) => {
           <Route path="/login" exact component={Login} />
           <Route path="/register" exact component={Register} />
           <Route path="/" exact component={authStatus ? Home : Login} /> 
+          <Route path="/new-request" exact component={authStatus ? SubmitRequest : Login} /> 
         </Switch>
       </div>
     </BrowserRouter>
@@ -27,11 +28,11 @@ Routes.propTypes = {
   authStatus: PropTypes.bool
 };
 Routes.defaultProps = {
-  authStatus: false
+  authStatus: true
 };
-// const mapStatesToProps = state => {
-//   return {
-//     // authStatus: state.isAuthentic.isAuthentic,
-//   };
-// };
-export default connect()(Routes);
+const mapStateToProps = state => {
+  return {
+    authStatus: true,
+  };
+};
+export default connect(mapStateToProps)(Routes);
