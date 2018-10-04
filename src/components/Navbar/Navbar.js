@@ -5,8 +5,11 @@ import '../../CSS/style.css';
 
 
 class Navbar extends Component {
-  constructor(props) {
-    super(props);
+  logOut = () => {
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('is_admin');
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
   }
 
   render () {
@@ -18,19 +21,23 @@ class Navbar extends Component {
               <div className="mta_logo">
                 <LoginRegisterImage />
               </div>
-              <div className="nav_bar">
+              <div className="nav_bar float-right">
+                <ul className="nav_lists float-right">              
+                  <li className="">
+                    <a href="/" onClick={() => this.logOut()}>LOG OUT</a>
+                  </li>
+                </ul>
+              </div>
+              <div className="nav_bar float-left">                
                 <ul className="nav_lists">
                   <li>
                     <NavLink to="/">Home</NavLink>
                   </li>
                   <li className="submenu">
-                    <a href="#">Requests</a>
+                    <NavLink to="/#">Requests</NavLink>
                     <ul className="">
                       <li>
                         <NavLink to="/new-request">New Request</NavLink>
-                      </li>
-                      <li>
-                        <a href="filter_requests.html">Filter Request</a>
                       </li>
                       <li>
                         <NavLink to="/">View all</NavLink>

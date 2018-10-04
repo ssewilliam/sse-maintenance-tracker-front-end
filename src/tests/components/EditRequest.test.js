@@ -1,8 +1,9 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { SubmitRequest } from '../../containers/Requests/SubmitRequest/SubmitRequest';
+import { moxios } from 'moxios';
+import EditRequest from '../../components/Requests/EditRequest/EditRequest';
 
-describe('SubmitRequest', () => {
+describe('EditRequest', () => {
   let wrapper, title, type, description;
   const event = { preventDefault: () => {} };
   const props = {
@@ -12,7 +13,7 @@ describe('SubmitRequest', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<SubmitRequest {...props}/>);
+    wrapper = mount(<EditRequest />);
 
     jest.spyOn(event, 'preventDefault');
 
@@ -20,7 +21,6 @@ describe('SubmitRequest', () => {
     type = wrapper.find('select[name="type"]');
     description = wrapper.find('textarea[name="description"]');
   });
-
   it('should change states', () => {
     title.simulate('change', { target: { value: 'this is a title', name: 'title' } });
     type.simulate('change', { target: { value: 'repair', name: 'type' } });
@@ -31,10 +31,10 @@ describe('SubmitRequest', () => {
     expect(wrapper.instance().state.hasFocus.description).toBeTruthy();
   });
 
-  it('should call oncreateRequestEventHandler', async () => {
-    const spy = jest.spyOn(wrapper.instance(), 'oncreateRequestEventHandler');
+  it('should call updateRequestEventHandler', async () => {
+    const spy = jest.spyOn(wrapper.instance(), 'updateRequestEventHandler');
     wrapper.find('form').simulate('submit');
     expect(spy).toHaveBeenCalled();
-    expect(wrapper.instance().oncreateRequestEventHandler).toHaveBeenCalled();
+    expect(wrapper.instance().updateRequestEventHandler).toHaveBeenCalled();
   });
 });
