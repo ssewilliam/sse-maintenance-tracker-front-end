@@ -26,7 +26,6 @@ describe('registerLoginReducer', () => {
       const action = { type: USER_REGISTRATION_START };
       const newState = registerLoginReducer(initialState, action);
       expect(newState.loading).toEqual(true);
-      expect(newState.loading).toEqual(true);
       expect(newState.errors).toEqual({});
       expect(newState.registrationStatus).toEqual(false);
     });
