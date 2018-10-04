@@ -6,6 +6,7 @@ import Home from './containers/Home/Home';
 import Register from './containers/Register/Register';
 import SubmitRequest from './containers/Requests/SubmitRequest/SubmitRequest';
 import Navbar from './components/Navbar/Navbar';
+import SingleRequest from './containers/Requests/SingleRequest/SingleRequest';
 
 export const Routes = (props) => {
   const { loginStatus } = props;
@@ -20,6 +21,7 @@ export const Routes = (props) => {
         <Switch>
           <Route path="/" exact component={ loginStatus  ? Home : Register} /> 
           <Route path="/new-request" exact component={loginStatus ? SubmitRequest : Register} /> 
+          <Route path="/requests/:requestId" exact component={loginStatus ? SingleRequest : Register} /> 
         </Switch>
       </div>
     </BrowserRouter>

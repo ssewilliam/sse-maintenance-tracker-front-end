@@ -21,7 +21,7 @@ class Navbar extends Component {
               <div className="nav_bar">
                 <ul className="nav_lists">
                   <li>
-                    <a href="requests.html">Home</a>
+                    <NavLink to="/">Home</NavLink>
                   </li>
                   <li className="submenu">
                     <a href="#">Requests</a>
@@ -33,7 +33,7 @@ class Navbar extends Component {
                         <a href="filter_requests.html">Filter Request</a>
                       </li>
                       <li>
-                        <a href="#">View all</a>
+                        <NavLink to="/">View all</NavLink>
                       </li>
                     </ul>
                   </li>
