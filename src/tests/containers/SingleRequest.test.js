@@ -34,7 +34,7 @@ describe('SingleRequest',() => {
     wrapper = parentWrapper.find(SingleRequest);
   });
 
-  it('should render articles without breaking', () => {
+  it('should render requests without breaking', () => {
     expect(wrapper.find('Button')).toHaveLength(3);
     expect(wrapper.find('div')).toHaveLength(8);
   });
@@ -55,7 +55,7 @@ describe('SingleRequest',() => {
       );
       wrapper = parentWrapper.find(SingleRequest);
     });
-    it('should render articles without breaking', () => {
+    it('should render requests without breaking', () => {
       expect(wrapper.find('Button')).toHaveLength(1);
       expect(wrapper.find('div')).toHaveLength(4);
     });

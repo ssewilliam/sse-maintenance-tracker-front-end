@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Route, Switch, BrowserRouter } from 'react-router-dom';
+import { Route, Switch, BrowserRouter, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Home from './containers/Home/Home';
 import Register from './containers/Register/Register';
@@ -21,7 +21,8 @@ export const Routes = (props) => {
         <Switch>
           <Route path="/" exact component={ loginStatus  ? Home : Register} /> 
           <Route path="/new-request" exact component={loginStatus ? SubmitRequest : Register} /> 
-          <Route path="/requests/:requestId" exact component={loginStatus ? SingleRequest : Register} /> 
+          <Route path="/requests/:requestId" exact component={loginStatus ? SingleRequest : Register} />
+          <Redirect to="/"/>
         </Switch>
       </div>
     </BrowserRouter>

@@ -23,9 +23,9 @@ describe('Home',() => {
     wrapper = parentWrapper.find(Home);
   });
 
-  it('should render articles without breaking', () => {
+  it('should render requests without breaking', () => {
     expect(wrapper.find('Button')).toHaveLength(1);
-    expect(wrapper.find('div')).toHaveLength(12);
+    expect(wrapper.find('div')).toHaveLength(14);
   });
 
   it('should logout users', () => {
@@ -54,7 +54,7 @@ describe('Home',() => {
       );
       wrapper = parentWrapper.find(Home);
     });
-    it('should render articles without breaking', () => {
+    it('should render requests without breaking', () => {
       expect(wrapper.find('Button')).toHaveLength(1);
       expect(wrapper.find('div')).toHaveLength(4);
     });

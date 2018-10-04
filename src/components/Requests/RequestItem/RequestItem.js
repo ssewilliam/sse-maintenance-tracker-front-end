@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { ManageRequest } from '../ManageRequests/ManageRequests';
 const request = (props) => {
   const { ...prop } = props;
   let character;
@@ -15,6 +16,10 @@ const request = (props) => {
   case 'resolved':
     prop.status = 'resolved';
     character = 'R';
+    break;
+  case 'disapproved':
+    prop.status = 'resolved';
+    character = 'D';
     break;
   default:
     break;
@@ -33,6 +38,13 @@ const request = (props) => {
           <NavLink to={`requests/${prop.id}`}>view request</NavLink>
         </div>
       </div>
+      <br/>
+      {
+        prop.is_admin === 'true' ?
+          <ManageRequest requestId={prop.id}/>
+          :
+          ''
+      }
     </div>
   );
 };

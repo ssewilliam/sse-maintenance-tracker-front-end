@@ -3,10 +3,10 @@ import { shallow } from 'enzyme';
 import RequestItem from  '../../components/Requests/RequestItem/RequestItem';
 
 describe('<RequestItem />', () => {
-  let pendingRequest, resolvedRequest, approvedRequest, defaultRequest;
-  let pendingWrapper, resolvedWrapper, approvedWrapper, defaultWrapper;
+  let pendingRequest, disapprovedRequest, resolvedRequest, approvedRequest, defaultRequest;
+  let pendingWrapper, disapprovedWrapper, resolvedWrapper, approvedWrapper, defaultWrapper;
   beforeEach(() =>{
-    defaultRequest, approvedRequest = resolvedRequest = pendingRequest = {
+    defaultRequest, disapprovedRequest = approvedRequest = resolvedRequest = pendingRequest = {
       description: 'This is ssewilliams maintenance tracker',
       id: 1,
       title: 'this is a request',
@@ -24,16 +24,21 @@ describe('<RequestItem />', () => {
       approvedRequest.status = 'approved';
       approvedWrapper = shallow(<RequestItem {...approvedRequest} />);
       
+      disapprovedRequest.status = 'disapproved';
+      disapprovedWrapper = shallow(<RequestItem {...disapprovedRequest} />);
+      
       defaultWrapper = shallow(<RequestItem {...defaultRequest} />);
       
       const pending = pendingWrapper.find('div').first();
       const approved = approvedWrapper.find('div').first();
       const resolved = resolvedWrapper.find('div').first();
+      const disapproved = disapprovedWrapper.find('div').first();
       const _default = defaultWrapper.find('div').first();
-      expect(pending.children()).toHaveLength(2);
-      expect(approved.children()).toHaveLength(2);
-      expect(resolved.children()).toHaveLength(2);
-      expect(_default.children()).toHaveLength(2);
+      expect(pending.children()).toHaveLength(3);
+      expect(approved.children()).toHaveLength(3);
+      expect(resolved.children()).toHaveLength(3);
+      expect(disapproved.children()).toHaveLength(3);
+      expect(_default.children()).toHaveLength(3);
     });
   });
 });
