@@ -23,11 +23,11 @@ export const requestFetchingFail = errors => {
     payload: errors,
   };
 };
-export const fetchRequests = () => {
+export const fetchRequest = (requestId) => {
   return dispatch => {
     dispatch(requestFetchingStart());
     return axios
-      .get(AppUrls.requests, {
+      .get(AppUrls.requests+'/'+requestId, {
         headers: {
           'token': `${localStorage.getItem('token')}`,
         },

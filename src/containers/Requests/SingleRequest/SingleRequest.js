@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Button } from 'reactstrap';
 import { history as historyPropTypes } from 'history-prop-types';
-import '../../CSS/style.css';
+import '../../../CSS/style.css';
 
-import { fetchRequests } from '../../store/actions/fetchRequestsAction';
-import NoRequest from '../../components/Requests/NoRequest/NoRequest';
-import RequestItem from '../../components/Requests/RequestItem/RequestItem';
+import { fetchRequest } from '../../../store/actions/fetchRequestAction';
+import NoRequest from '../../../components/Requests/NoRequest/NoRequest';
+import RequestDetail from '../../../components/Requests/RequestDetail/RequestDetail';
 
-export class Home extends Component {
+export class SingleRequest extends Component {
   constructor(props) {
     super(props);
   }
@@ -18,8 +18,8 @@ export class Home extends Component {
     history: PropTypes.shape(historyPropTypes),
   }
   componentDidMount(){
-    const { onFetch } = this.props;
-    onFetch();
+    const { onFetch, match } = this.props;
+    onFetch(match.params.requestId);
   }
   signOut = () => {
     localStorage.removeItem('username');
@@ -30,23 +30,22 @@ export class Home extends Component {
 
   render() {
     const {
-      requests, hasRequests
+      request, hasRequests
     } = this.props;
     return (
       <div className="container">
-        <div className="col-12">
-          <h3 className="title">Requests</h3>
-          <div className="row requests">
-            <div className="requests request_content">
-              <h5 className="title">Current Requests</h5>
-            </div>
+        <div className="bgwrap large-12">
+        </div>
+        <div className="col-">         
+          <div className="row">
             {
               hasRequests === false ?
                 NoRequest
                 :
-                requests.map((request, index) => (
+                request.map((request, index) => (
                   <div className="col-12" key={index}>
-                    <RequestItem {...request} />
+                    <h3 className="heading text-center">{request.title}</h3>
+                    <RequestDetail {...request} />
                   </div>
                 ))
             }
@@ -58,25 +57,27 @@ export class Home extends Component {
     );
   }
 }
-Home.propTypes = {
-  requests: PropTypes.array,
+SingleRequest.propTypes = {
+  request: PropTypes.array,
   onFetch: PropTypes.func,
   hasRequests: PropTypes.bool,
+  match: PropTypes.object
 };
-Home.defaultProps = {
-  requests: [],
+SingleRequest.defaultProps = {
+  request: [],
   hasRequests: false,
-  onFetch: () => {}
+  onFetch: () => {},
+  match:{},
 };
 const mapStateToProps = state => {
   return {
-    requests: state.fetchRequests.requests,
-    hasRequests: state.fetchRequests.hasRequests
+    request: state.fetchRequest.requests,
+    hasRequests: state.fetchRequest.hasRequests
   };
 };
 export const mapDispatchToProps = dispatch =>{
   return {
-    onFetch: () => dispatch(fetchRequests())
+    onFetch: (requestId) => dispatch(fetchRequest(requestId))
   };
 };
-export default connect(mapStateToProps,mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(SingleRequest);

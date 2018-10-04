@@ -4,29 +4,29 @@ import thunk from 'redux-thunk';
 import sinon from 'sinon';
 import moxios from 'moxios';
 import { shallow } from 'enzyme';
-import { fetchRequests } from '../../store/actions/fetchRequestsAction';
+import { fetchRequest } from '../../store/actions/fetchRequestAction';
 import {
   REQUEST_FETCHING_START,
   REQUEST_FETCHING_SUCCESS,
   REQUEST_FETCHING_FAIL
 } from '../../store/actions/actionTypes';
 import AppUrls from '../../AppUrls';
-import Home from '../../containers/Home/Home';
-import { mapDispatchToProps } from '../../containers/Home/Home';
+import { mapDispatchToProps } from '../../containers/Requests/SingleRequest/SingleRequest';
+import SingleRequest from '../../containers/Requests/SingleRequest/SingleRequest';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
 const requestsResponse = {
-  requests:[{},{}]
+  requests:[{}]
 };
 
-describe('fetchRequestActions', () => {
+describe('fetchRequestAction', () => {
   let store, wrapper;
   beforeEach(() => {
     moxios.install();
     const initialState = {
-      fetchRequests: {
+      fetchRequest: {
         loading: false,
         hasRequests: false,
         errors: {},
@@ -35,7 +35,7 @@ describe('fetchRequestActions', () => {
     };
     store = mockStore(initialState);
     wrapper = shallow(
-      <Home store={store} />
+      <SingleRequest store={store} />
     );
     localStorage.removeItem('isLoggedIn');
   });
@@ -49,7 +49,7 @@ describe('fetchRequestActions', () => {
   });
 
   it('should start fetching and end with success', () => {
-    moxios.stubRequest(AppUrls.requests, {
+    moxios.stubRequest(AppUrls.requests+'/2', {
       status: 200,
       response: requestsResponse,
     });
@@ -62,13 +62,13 @@ describe('fetchRequestActions', () => {
         type: REQUEST_FETCHING_SUCCESS,
       },
     ];
-    return store.dispatch(fetchRequests()).then(() => {
+    return store.dispatch(fetchRequest(2)).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
     });
   });
 
   it('should start fetching and end with fail', () =>{
-    moxios.stubRequest(AppUrls.requests, {
+    moxios.stubRequest(AppUrls.requests+'/'+2, {
       status:400,
       response: { error: 'you have no requests' },
     });
@@ -78,7 +78,7 @@ describe('fetchRequestActions', () => {
         payload: 'errors' }];
 
     const store = mockStore();
-    return store.dispatch(fetchRequests()).catch(() => {
+    return store.dispatch(fetchRequest(2)).catch(() => {
       expect(store.getActions()).toEqual(expectedActions);
     }); 
   });
@@ -88,7 +88,7 @@ describe('fetchRequestActions', () => {
       const dispatchSpy = sinon.spy();
       const { onFetch } = mapDispatchToProps(dispatchSpy);
       onFetch();
-      const expectedAction = fetchRequests();
+      const expectedAction = fetchRequest();
       const spyLastCall = dispatchSpy.args[0][0];
       expect(spyLastCall.types).toBe(expectedAction.types);
     });
