@@ -22,8 +22,10 @@ export class SingleRequest extends Component {
     onFetch(match.params.requestId);
   }
   signOut = () => {
-    localStorage.removeItem('username');
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('is_admin');
     localStorage.removeItem('token');
+    localStorage.removeItem('username');
     this.props.history.push('/login');
   }
 
@@ -52,7 +54,7 @@ export class SingleRequest extends Component {
 
           </div>
         </div>
-        <Button color="primary" onClick={this.signOut}>primary</Button>{' '}
+        <Button color="primary" onClick={this.signOut}>Sign Out</Button>
       </div>
     );
   }

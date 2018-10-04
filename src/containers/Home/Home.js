@@ -22,15 +22,17 @@ export class Home extends Component {
     onFetch();
   }
   signOut = () => {
-    localStorage.removeItem('username');
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('is_admin');
     localStorage.removeItem('token');
+    localStorage.removeItem('username');
     this.props.history.push('/login');
   }
 
 
   render() {
     const {
-      requests, hasRequests
+      requests, hasRequests, loginStatus
     } = this.props;
     return (
       <div className="container">
@@ -46,6 +48,7 @@ export class Home extends Component {
                 :
                 requests.map((request, index) => (
                   <div className="col-12" key={index}>
+                    <div style={{display:'none'}}>{request.is_admin = loginStatus}</div>
                     <RequestItem {...request} />
                   </div>
                 ))
@@ -53,7 +56,7 @@ export class Home extends Component {
 
           </div>
         </div>
-        <Button color="primary" onClick={this.signOut}>primary</Button>{' '}
+        <Button color="primary" onClick={this.signOut}>Sign Out</Button>
       </div>
     );
   }
@@ -62,10 +65,12 @@ Home.propTypes = {
   requests: PropTypes.array,
   onFetch: PropTypes.func,
   hasRequests: PropTypes.bool,
+  loginStatus: PropTypes.bool,
 };
 Home.defaultProps = {
   requests: [],
   hasRequests: false,
+  loginStatus: localStorage.getItem('is_admin') || false,
   onFetch: () => {}
 };
 const mapStateToProps = state => {

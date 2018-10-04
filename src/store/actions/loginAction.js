@@ -36,7 +36,8 @@ export const loginUser = (userData) => {
         dispatch(userLoginSuccess(response.data.message));
         localStorage.setItem('isLoggedIn',true);
         localStorage.setItem('token', response.data.token);
-        localStorage.setItem('username', userData.user);
+        localStorage.setItem('username', userData.user);        
+        localStorage.setItem('is_admin', response.data.is_admin);
       })
       .catch((error) => {
         dispatch(userLoginFail(error.response.data));
