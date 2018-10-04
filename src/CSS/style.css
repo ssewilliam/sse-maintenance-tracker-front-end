@@ -407,9 +407,3 @@ dl dd {
     bottom: 0;
     overflow: scroll;
 }
-.hidden {
-    display: none;
-}
-.show {
-    display: block;
-}

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
-// import { history as historyPropTypes } from 'history-prop-types';
+import { NavLink } from 'react-router-dom';
 import LoginRegisterImage from '../Forms/LoginRegisterImage/LoginRegisterImage';
 import '../../CSS/style.css';
 
@@ -28,7 +27,7 @@ class Navbar extends Component {
                     <a href="#">Requests</a>
                     <ul className="">
                       <li>
-                        <a href="create_request.html">New Request</a>
+                        <NavLink to="/new-request">New Request</NavLink>
                       </li>
                       <li>
                         <a href="filter_requests.html">Filter Request</a>

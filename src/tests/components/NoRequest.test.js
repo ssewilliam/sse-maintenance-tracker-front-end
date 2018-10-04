@@ -1,10 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-import Navbar from '../../components/Navbar/Navbar';
+import NoRequest from '../../components/Requests/NoRequest/NoRequest';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<BrowserRouter><Navbar /></BrowserRouter> , div);
+  ReactDOM.render( <NoRequest /> , div);
   ReactDOM.unmountComponentAtNode(div);
 });
