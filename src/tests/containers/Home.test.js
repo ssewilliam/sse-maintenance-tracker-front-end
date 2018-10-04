@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import { BrowserRouter } from 'react-router-dom';
 import { Home } from '../../containers/Home/Home';
 
@@ -24,24 +24,16 @@ describe('Home',() => {
   });
 
   it('should render requests without breaking', () => {
-    expect(wrapper.find('Button')).toHaveLength(1);
     expect(wrapper.find('div')).toHaveLength(14);
   });
-
-  it('should logout users', () => {
-    const wrapper = shallow(<Home {...props} history={{push: jest.fn()}} />);
-    wrapper.instance().signOut();
-    const username = localStorage.getItem('username');
-    expect(username).toBe(false);
-  });
   describe('onFetch gets called properly', () => {
-    it('should call onFetch four times', () => {
+    it('should call onFetch twice', () => {
       wrapper.instance();
-      expect(mockFetchArticles.mock.calls).toHaveLength(3);
+      expect(mockFetchArticles.mock.calls).toHaveLength(2);
     });
-    it('should call onFetch six times', () => {
+    it('should call onFetch four times', () => {
       wrapper.instance().componentDidMount();
-      expect(mockFetchArticles.mock.calls).toHaveLength(5);
+      expect(mockFetchArticles.mock.calls).toHaveLength(4);
     });    
   });
   describe('Home with hasRequests as false', () => {
@@ -55,8 +47,7 @@ describe('Home',() => {
       wrapper = parentWrapper.find(Home);
     });
     it('should render requests without breaking', () => {
-      expect(wrapper.find('Button')).toHaveLength(1);
-      expect(wrapper.find('div')).toHaveLength(4);
+      expect(wrapper.find('div')).toHaveLength(18);
     });
   });
 });

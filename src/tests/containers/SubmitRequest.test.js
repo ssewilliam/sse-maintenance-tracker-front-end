@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import {SubmitRequest} from '../../containers/Requests/SubmitRequest/SubmitRequest';
+import { SubmitRequest } from '../../containers/Requests/SubmitRequest/SubmitRequest';
 
 describe('SubmitRequest', () => {
   let wrapper, title, type, description;

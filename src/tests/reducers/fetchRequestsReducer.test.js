@@ -3,7 +3,7 @@ import {
   REQUEST_FETCHING_SUCCESS,
   REQUEST_FETCHING_FAIL
 } from '../../store/actions/actionTypes';
-import fetchRequestReducer from '../../store/reducers/fetchRequestReducer';
+import fetchRequestReducer from '../../store/reducers/fetchRequestsReducer';
 const initialState = {
   loading: false,
   hasRequests: false,

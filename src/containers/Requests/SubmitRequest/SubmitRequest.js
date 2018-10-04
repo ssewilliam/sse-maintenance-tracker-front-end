@@ -6,10 +6,6 @@ import { createRequest } from '../../../store/actions/submitRequestAction';
 import Overlay from '../../../components/Overlay/Overlay';
 import notifyDone from '../../../Utilities';
 export class SubmitRequest extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   state = {
     request: {
       title:'',

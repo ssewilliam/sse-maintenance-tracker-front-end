@@ -11,16 +11,16 @@ export const requestFetchingStart = () => {
     type: REQUEST_FETCHING_START,
   };
 };
-export const requestFetchingSuccess = (requests) => {
+export const requestFetchingSuccess = (request) => {
   return {
     type: REQUEST_FETCHING_SUCCESS,
-    payload: requests,
+    payload: request,
   };
 };
-export const requestFetchingFail = errors => {
+export const requestFetchingFail = error => {
   return {
     type: REQUEST_FETCHING_FAIL,
-    payload: errors,
+    payload: error,
   };
 };
 export const fetchRequest = (requestId) => {

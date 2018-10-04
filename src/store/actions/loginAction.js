@@ -38,6 +38,7 @@ export const loginUser = (userData) => {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('username', userData.user);        
         localStorage.setItem('is_admin', response.data.is_admin);
+        window.location.reload();
       })
       .catch((error) => {
         dispatch(userLoginFail(error.response.data));
