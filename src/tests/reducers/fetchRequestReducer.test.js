@@ -3,15 +3,15 @@ import {
   REQUEST_FETCHING_SUCCESS,
   REQUEST_FETCHING_FAIL
 } from '../../store/actions/actionTypes';
-import fetchRequestReducer from '../../store/reducers/fetchRequestsReducer';
+import fetchRequestReducer from '../../store/reducers/fetchRequestReducer';
 const initialState = {
-  loading: false,
-  hasRequests: false,
-  errors: {},
-  requests: [],
+  fetchLoading: false,
+  hasRequest: false,
+  fetchError: {},
+  request: [],
 };
 let action = {
-  payload: initialState.requests
+  payload: initialState.request
 };
 
 describe('fetchRequestReducer', () => {
@@ -23,26 +23,25 @@ describe('fetchRequestReducer', () => {
     it('should be false when fetching starts', () => {
       action.type = REQUEST_FETCHING_START;
       const newState = fetchRequestReducer(initialState, action);
-      expect(newState.loading).toEqual(false);
-      expect(newState.errors).toEqual({});
-      expect(newState.hasRequests).toEqual(false);
+      expect(newState.fetchLoading).toEqual(false);
+      expect(newState.fetchError).toEqual({});
+      expect(newState.hasRequest).toEqual(false);
     });
     it('should be when requests exist', () => {
       action.type = REQUEST_FETCHING_SUCCESS;
       const newState = fetchRequestReducer(initialState, action);
-
-      expect(newState.hasRequests).toEqual(true);
-      expect(newState.loading).toEqual(false);
-      expect(newState.requests).toEqual(initialState.requests);
+      expect(newState.hasRequest).toEqual(true);
+      expect(newState.fetchLoading).toEqual(false);
+      expect(newState.request).toEqual(initialState.request);
     });
     it('should be false when request fetching fails', () => {
 
       action.type = REQUEST_FETCHING_FAIL;
       const newState = fetchRequestReducer(initialState, action);
 
-      expect(newState.hasRequests).toEqual(false);
-      expect(newState.loading).toEqual(false);
-      expect(newState.requests).toEqual(initialState.requests);
+      expect(newState.hasRequest).toEqual(false);
+      expect(newState.fetchLoading).toEqual(false);
+      expect(newState.request).toEqual(initialState.request);
     });
   });
 });

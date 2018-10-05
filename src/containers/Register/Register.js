@@ -171,7 +171,6 @@ export class Register extends Component {
       onLogin({
         user
       });
-      // alert('here');
     }
   };
 

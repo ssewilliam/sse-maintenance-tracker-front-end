@@ -5,30 +5,30 @@ import {
 } from '../actions/actionTypes';
 
 const initialState = {
-  loading: false,
-  hasRequests: false,
-  errors: {},
-  requests: [],
+  fetchLoading: false,
+  hasRequest: false,
+  fetchError: {},
+  request: [],
 };
 const reducer = (state = initialState, action) => {
   switch (action.type) {
   case REQUEST_FETCHING_START:
     return {
       ...state,
-      hasRequests: false,
-      errors: {},
+      hasRequest: false,
+      fetchError: {},
     };
   case REQUEST_FETCHING_SUCCESS:
     return {
       ...state,
-      hasRequests: true,
-      requests: [...action.payload],
-      errors: {},
+      hasRequest: true,
+      request: [...action.payload],
+      fetchError: {},
     };
   case REQUEST_FETCHING_FAIL:
     return {
       ...state,
-      errors: [...action.payload],
+      fetchError: [...action.payload],
     };
   default:
     break;

@@ -27,10 +27,10 @@ describe('fetchRequestAction', () => {
     moxios.install();
     const initialState = {
       fetchRequest: {
-        loading: false,
-        hasRequests: false,
-        errors: {},
-        requests: [],
+        fetchLoading: false,
+        hasRequest: false,
+        fetchError: {},
+        requests: [{}],
       }
     };
     store = mockStore(initialState);
@@ -45,11 +45,11 @@ describe('fetchRequestAction', () => {
   });
 
   it('should start with initial hasRequests state as false', () => {
-    expect(wrapper.props().hasRequests).toBe(false);
+    expect(wrapper.props().hasRequest).toBe(false);
   });
 
   it('should start fetching and end with success', () => {
-    moxios.stubRequest(AppUrls.requests+'/2', {
+    moxios.stubRequest(AppUrls.requests+'/1', {
       status: 200,
       response: requestsResponse,
     });
@@ -62,13 +62,13 @@ describe('fetchRequestAction', () => {
         type: REQUEST_FETCHING_SUCCESS,
       },
     ];
-    return store.dispatch(fetchRequest(2)).then(() => {
+    return store.dispatch(fetchRequest(1)).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
     });
   });
 
   it('should start fetching and end with fail', () =>{
-    moxios.stubRequest(AppUrls.requests+'/'+2, {
+    moxios.stubRequest(AppUrls.requests+'/'+1, {
       status:400,
       response: { error: 'you have no requests' },
     });
@@ -78,17 +78,17 @@ describe('fetchRequestAction', () => {
         payload: 'errors' }];
 
     const store = mockStore();
-    return store.dispatch(fetchRequest(2)).catch(() => {
+    return store.dispatch(fetchRequest(1)).catch(() => {
       expect(store.getActions()).toEqual(expectedActions);
     }); 
   });
 
   describe('Map Dispatch To Props', () => {
-    it('should call onFetch action', () => {
+    it('should call onFetchOne action', () => {
       const dispatchSpy = sinon.spy();
-      const { onFetch } = mapDispatchToProps(dispatchSpy);
-      onFetch();
-      const expectedAction = fetchRequest();
+      const { onFetchOne } = mapDispatchToProps(dispatchSpy);
+      onFetchOne(1);
+      const expectedAction = fetchRequest(1);
       const spyLastCall = dispatchSpy.args[0][0];
       expect(spyLastCall.types).toBe(expectedAction.types);
     });

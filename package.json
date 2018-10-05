@@ -34,7 +34,7 @@
     "eslint": "^5.6.0",
     "eslint-plugin-jasmine": "^2.10.1",
     "eslint-plugin-jest": "^21.22.1",
-    "jest": "^23.6.0",
+    "jest": "20.0.4",
     "redux-mock-store": "^1.5.3",
     "sinon": "^6.3.4"
   },
@@ -45,7 +45,8 @@
       "!src/routes.js",
       "!src/store/reducers/index.js",
       "!src/setupTests.js",
-      "!src/Utilities.js"
+      "!src/Utilities.js",
+      "!src/components/Requests/EditRequest/EditRequest.js"
     ]
   }
 }
