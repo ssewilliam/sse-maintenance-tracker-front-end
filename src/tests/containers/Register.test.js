@@ -3,8 +3,9 @@ import { mount } from 'enzyme';
 import { Alert } from 'reactstrap';
 import { BrowserRouter } from 'react-router-dom';
 import { Register } from '../../containers/Register/Register';
+import { notify } from 'react-notify-toast';
 
-describe('Register', () => {
+describe('Register without props', () => {
   let wrapper, parentWrapper, username, email, password;
   const event = { preventDefault: () => {} };
 
@@ -20,6 +21,10 @@ describe('Register', () => {
     username = wrapper.find('#registerUsername');
     email = wrapper.find('#registerEmail');
     password = wrapper.find('#registerPassword');
+  });
+
+  it('should render forms without breaking', () => {
+    expect(wrapper.find('div')).toHaveLength(24);
   });
 
   it('should call eventListener', () => {
@@ -95,7 +100,7 @@ describe('Register', () => {
       expect(wrapper.instance().onRegistrationSubmitEventHandler).toHaveBeenCalled();
     });
 
-    it('should call validationHandler 15 times', async () => {
+    it('should call validationHandler 21 times', async () => {
       username.instance().value = 'sampleUser';
       username.simulate('change');
       email.instance().value = 'user@mail.com';
@@ -105,7 +110,7 @@ describe('Register', () => {
       wrapper.find('#registractionForm').simulate('submit');
       expect(spyRegistrationEvent).toHaveBeenCalled();
       expect(spyValidationHandler).toHaveBeenCalled();
-      expect(spyValidationHandler).toHaveBeenCalledTimes(15);
+      expect(spyValidationHandler).toHaveBeenCalledTimes(21);
       expect(wrapper.instance().onRegistrationSubmitEventHandler).toHaveBeenCalled();
     });
   });
@@ -120,5 +125,37 @@ describe('Register', () => {
       tab2.simulate('click');
       expect(wrapper.instance().state.activeTab).toBe('2');
     });
+    it('should switch to tab 3',() => {
+      const tab3 = wrapper.find('NavLink[name="tab3"]');
+      tab3.simulate('click');
+      expect(wrapper.instance().state.activeTab).toBe('3');
+    });
+  });
+});
+describe('Register with props', () => {
+  let wrapper, parentWrapper;
+  const event = { preventDefault: () => {} };
+  const props = {
+    loginLoading: true,
+    errorsLogin: {
+      message: 'username already used',
+    },
+    loginStatus: true,
+    promoStatus: true,
+    errors: {
+      message: 'username is already used',
+    }
+  };
+  beforeEach(() => {
+    parentWrapper = mount(
+      <BrowserRouter>
+        <Register {...props} notifyDone={notify.show = jest.fn()}/>
+      </BrowserRouter>);
+
+    wrapper = parentWrapper.find(Register);
+    jest.spyOn(event, 'preventDefault');
+  });
+  it('should render forms without breaking', () => {
+    expect(wrapper.find('div')).toHaveLength(34);
   });
 });

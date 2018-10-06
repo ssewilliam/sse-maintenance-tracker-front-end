@@ -1,6 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { SubmitRequest } from '../../containers/Requests/SubmitRequest/SubmitRequest';
+import { notify } from 'react-notify-toast';
 
 describe('SubmitRequest', () => {
   let wrapper, title, type, description;
@@ -12,7 +13,7 @@ describe('SubmitRequest', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<SubmitRequest {...props}/>);
+    wrapper = mount(<SubmitRequest {...props}  notifyDone={notify.show = jest.fn()}/>);
 
     jest.spyOn(event, 'preventDefault');
 
@@ -36,5 +37,23 @@ describe('SubmitRequest', () => {
     wrapper.find('form').simulate('submit');
     expect(spy).toHaveBeenCalled();
     expect(wrapper.instance().oncreateRequestEventHandler).toHaveBeenCalled();
+  });
+});
+describe('SubmitRequest with props', () => {
+  let wrapper;
+  const event = { preventDefault: () => {} };
+  const props = {
+    loading: true,
+    createStatus:true,
+    errors: {
+      message: 'title already used',
+    }
+  };
+  beforeEach(() => {
+    wrapper = mount(<SubmitRequest {...props}  notifyDone={notify.show = jest.fn()}/>);
+    jest.spyOn(event, 'preventDefault');
+  });
+  it('should render form without breaking', () => {
+    expect(wrapper.find('div')).toHaveLength(11);
   });
 });

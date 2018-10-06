@@ -8,6 +8,7 @@ import Notification from 'react-notify-toast';
 import notifyDone from '../../Utilities';
 import { registerUser } from '../../store/actions/registerAction';
 import { loginUser } from '../../store/actions/loginAction';
+import { promoteUser } from '../../store/actions/promoteUserAction';
 import LoginRegisterImage from '../../../src/components/Forms/LoginRegisterImage/LoginRegisterImage';
 import Overlay from '../../components/Overlay/Overlay';
 import '../../CSS/style.css';
@@ -24,6 +25,8 @@ export class Register extends Component {
         username: '',
         email: '',
         password: '',
+        promoUsername: '',
+        promoEmail: '',
         loginUsername:'',
         loginPassword:'',
       },
@@ -58,6 +61,24 @@ export class Register extends Component {
   validationHandler = inputName => {
     const { user, hasFocus } = this.state;
     switch (inputName) {
+    case 'promoUsername':
+      if (user.promoUsername.length < 1 && hasFocus.promoUsername) {
+        return (
+          <Alert color="danger" isOpen={this.state.visible} toggle={this.onDismiss}>
+            A Username to promote is required
+          </Alert>
+        );
+      }
+      break;    
+    case 'promoEmail':
+      if (user.promoEmail.length < 1 && hasFocus.promoEmail) {
+        return (
+          <Alert color="danger" isOpen={this.state.visible} toggle={this.onDismiss}>
+            An email to promote is required
+          </Alert>
+        );
+      }
+      break;    
     case 'loginUsername':
       if (user.loginUsername.length < 1 && hasFocus.loginUsername) {
         return (
@@ -173,22 +194,54 @@ export class Register extends Component {
       });
     }
   };
+  onPromoteUserEventHandler = event => {
+    event.preventDefault();
+    alert('here');
+    const {
+      onPromoteUser
+    } = this.props;
+    const {
+      user, hasFocus
+    } = this.state;
+    if (user.promoUsername === '') {
+      this.setState({
+        hasFocus: {...hasFocus, promoUsername: true }
+      });
+      this.validationHandler('promoUsername');
+    }
+    if (user.promoEmail === '') {
+      this.setState({
+        hasFocus: {...hasFocus, promoEmail: true }
+      });
+      this.validationHandler('promoEmail');
+    } 
+    if (user.promoUsername && user.promoEmail) {
+      onPromoteUser({
+        user
+      });
+    }
+  };
 
   render() {
-    const { errors, errorsLogin, loading, loginLoading, loginStatus } = this.props;
+    const {
+      errors,
+      errorsLogin,
+      loginLoading,
+      promoStatus,
+      loginStatus
+    } = this.props;
     return(
       <div className="login_register_wrap">
-        {
-          loading ?
-            <LoginRegisterImage loader={'loader'}/>
-            : <LoginRegisterImage />
-        }
+        <LoginRegisterImage />
         { loginLoading ? <Overlay /> : '' }    
         {
           errorsLogin.message ? notifyDone(errorsLogin.message, 'error', 'red') : ''
         }
         {
           loginStatus ? notifyDone('Welcome to Maintenance Tracker', 'success', 'green') : ''
+        }
+        {
+          promoStatus ? notifyDone('You have been promoted to Admin', 'success', 'green') : ''
         }
         <Notification />
         <Nav tabs>
@@ -208,6 +261,15 @@ export class Register extends Component {
               onClick={() => { this.toggle('2'); }}
             >
               Register
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink
+              name="tab3"
+              className={classnames({ active: this.state.activeTab === '3' })}
+              onClick={() => { this.toggle('3'); }}
+            >
+              Promote User to Admin
             </NavLink>
           </NavItem>
         </Nav>
@@ -247,7 +309,7 @@ export class Register extends Component {
               </Col>
             </Row>
           </TabPane>
-          {<TabPane tabId="2">
+          <TabPane tabId="2">
             <Row>
               <Col sm="12">
                 <form id="registractionForm" autoComplete="Off"
@@ -287,7 +349,42 @@ export class Register extends Component {
                 </form>
               </Col>
             </Row>
-          </TabPane>}
+          </TabPane>
+          <TabPane tabId="3">
+            <Row>
+              <Col sm="12">
+                <form id="promoteUserForm" autoComplete="Off" 
+                  onSubmit={event => this.onPromoteUserEventHandler(event)}>
+                  <h2 className="title text-center">Become an Admin</h2>                  
+                  <div className="form_group">
+                    <label htmlFor="username"></label>
+                    <input type="text" name="promoUsername" onChange={this.eventListener} id="promoUsername" placeholder="username" />
+                    {errors.message ?
+                      <Alert color="danger" isOpen={this.state.visible} toggle={this.onDismiss}>
+                        {errors.message}
+                      </Alert>
+                      : ''
+                    }
+                    {this.validationHandler('promoUsername')}  
+                  </div>
+                  <div className="form_group">
+                    <label htmlFor="promoEmail"></label>
+                    <input type="email" name="promoEmail" onChange={this.eventListener} id="promoEmail" placeholder="email"/>
+                    {errors.message ?
+                      <Alert color="danger" isOpen={this.state.visible} toggle={this.onDismiss}>
+                        {errors.message}
+                      </Alert>
+                      : ''
+                    }
+                    {this.validationHandler('promoEmail')} 
+                  </div>
+                  <div className="form_group">
+                    <input type="submit" value="Login" />
+                  </div>
+                </form>
+              </Col>
+            </Row>
+          </TabPane>
         </TabContent>
       </div>
     );
@@ -298,18 +395,22 @@ Register.propTypes = {
   errors: PropTypes.object,
   onRegister: PropTypes.func,
   onLogin: PropTypes.func, 
+  onPromoteUser: PropTypes.func,
   loginLoading: PropTypes.bool,
   errorsLogin: PropTypes.object,
   loginStatus: PropTypes.bool,
+  promoStatus: PropTypes.bool,
 };
 Register.defaultProps = {
   loading: false,
   loginStatus: false,
+  promoStatus: false,
   errors: { message:''},
   errorsLogin: { message:''},
   loginLoading: false,
   onRegister: () => {},
   onLogin: () => {},
+  onPromoteUser: () => {},
 };
 
 const mapStateToProps = state => {
@@ -319,6 +420,7 @@ const mapStateToProps = state => {
     loading: state.registerLogin.loading,
     registrationStatus: state.registerLogin.registrationStatus,
     loginStatus: state.registerLogin.loginStatus,
+    promoStatus: state.registerLogin.promoStatus,
     errorsLogin: state.registerLogin.errors,
     loginLoading: state.registerLogin.loading,
   };
@@ -327,6 +429,7 @@ export const mapDispatchToProps = dispatch => {
   return {
     onRegister: (userData) => dispatch(registerUser(userData)),
     onLogin: (userData) => dispatch(loginUser(userData)),
+    onPromoteUser: (userData) => dispatch(promoteUser(userData)),
   };
 };
 export default connect(

@@ -1,25 +1,25 @@
 import axios from 'axios';
 import {
-  REQUEST_FETCHING_START,
-  REQUEST_FETCHING_SUCCESS,
-  REQUEST_FETCHING_FAIL
+  REQUEST_FETCHING_ALL_START,
+  REQUEST_FETCHING_ALL_SUCCESS,
+  REQUEST_FETCHING_ALL_FAIL
 } from './actionTypes';
 import AppUrls from '../../AppUrls';
 
 export const requestFetchingStart = () => {
   return {
-    type: REQUEST_FETCHING_START,
+    type: REQUEST_FETCHING_ALL_START,
   };
 };
 export const requestFetchingSuccess = (requests) => {
   return {
-    type: REQUEST_FETCHING_SUCCESS,
+    type: REQUEST_FETCHING_ALL_SUCCESS,
     payload: requests,
   };
 };
 export const requestFetchingFail = errors => {
   return {
-    type: REQUEST_FETCHING_FAIL,
+    type: REQUEST_FETCHING_ALL_FAIL,
     payload: errors,
   };
 };

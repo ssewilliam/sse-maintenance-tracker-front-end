@@ -40,7 +40,7 @@ const request = (props) => {
       </div>
       <br/>
       {
-        prop.is_admin === 'true' ?
+        prop.is_admin === true ?
           <ManageRequest requestId={prop.id}/>
           :
           ''
