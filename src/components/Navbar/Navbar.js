@@ -10,6 +10,7 @@ class Navbar extends Component {
     localStorage.removeItem('is_admin');
     localStorage.removeItem('token');
     localStorage.removeItem('username');
+    window.location.reload();
   }
 
   render () {

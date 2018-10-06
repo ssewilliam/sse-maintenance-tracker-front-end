@@ -10,7 +10,8 @@ describe('<RequestItem />', () => {
       description: 'This is ssewilliams maintenance tracker',
       id: 1,
       title: 'this is a request',
-      type: 'repair'
+      type: 'repair',
+      is_admin: true,
     };
   });
   describe('number of divs for requests', () => {
@@ -34,10 +35,10 @@ describe('<RequestItem />', () => {
       const resolved = resolvedWrapper.find('div').first();
       const disapproved = disapprovedWrapper.find('div').first();
       const _default = defaultWrapper.find('div').first();
-      expect(pending.children()).toHaveLength(3);
-      expect(approved.children()).toHaveLength(3);
-      expect(resolved.children()).toHaveLength(3);
-      expect(disapproved.children()).toHaveLength(3);
+      expect(pending.children()).toHaveLength(4);
+      expect(approved.children()).toHaveLength(4);
+      expect(resolved.children()).toHaveLength(4);
+      expect(disapproved.children()).toHaveLength(4);
       expect(_default.children()).toHaveLength(3);
     });
   });

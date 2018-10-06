@@ -85,6 +85,18 @@ describe('registerActions', () => {
   });
 
   describe('Map Dispatch To Props', () => {
+    it('test if onRegister is mapped to props', () => {
+      const user = {
+        username:'meme',
+        email:'me@mail.com',
+        password:'@password'
+      };
+      const dispatch = jest.fn();
+      const props = mapDispatchToProps(dispatch);
+
+      props.onRegister(user);
+      expect(typeof props.onRegister).toEqual('function');
+    });
     it('should call onRegister action', () => {
       const user = {
         username:'meme',
@@ -93,10 +105,10 @@ describe('registerActions', () => {
       };
       const dispatchSpy = sinon.spy();
       const { onRegister } = mapDispatchToProps(dispatchSpy);
-      onRegister();
+      onRegister(user);
       const expectedAction = registerUser(user);
       const spyLastCall = dispatchSpy.args[0][0];
-      expect(spyLastCall.types).toBe(expectedAction.types);
+      expect(typeof spyLastCall).toBe(typeof expectedAction);
     });
   });
 });

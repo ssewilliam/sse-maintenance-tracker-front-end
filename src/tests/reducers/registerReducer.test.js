@@ -6,6 +6,9 @@ import {
   USER_LOGIN_START,
   USER_LOGIN_SUCCESS,
   USER_LOGIN_FAIL,
+  USER_RANKING_START,
+  USER_RANKING_SUCCESS,
+  USER_RANKING_FAIL
 } from '../../store/actions/actionTypes';
 
 const initialState = {
@@ -93,6 +96,43 @@ describe('registerLoginReducer', () => {
       it('should be false when login fails', () => {
 
         action.type = USER_LOGIN_FAIL;
+        const newState = registerLoginReducer(initialState, action);
+
+        expect(newState.loading).toEqual(false);
+        expect(newState.user).toEqual(initialState.user);
+      });
+    });
+  });
+  describe('User promotion',()=>{
+    it('should change loading to true when ranking starts', () => {
+      const action = { type: USER_RANKING_START };
+      const newState = registerLoginReducer(initialState, action);
+      expect(newState.loading).toEqual(true);
+      expect(newState.errors).toEqual({});
+      expect(newState.promoStatus).toEqual(false);
+    });
+    describe('promoStatus', () => {
+      let action;
+      beforeEach(() =>{
+        initialState.user = {
+          promoUsername: 'ssewilliam',
+          promoEmail: 'user@mail.com',
+        };
+        action = {
+          payload: initialState.user
+        };
+      });
+      it('should be true when user ranking is successfull', () => {
+        action.type = USER_RANKING_SUCCESS;
+        const newState = registerLoginReducer(initialState, action);
+
+        expect(newState.promoStatus).toEqual(true);
+        expect(newState.loading).toEqual(false);
+        expect(newState.user).toEqual(initialState.user);
+      });
+      it('should be false when login fails', () => {
+
+        action.type = USER_RANKING_FAIL;
         const newState = registerLoginReducer(initialState, action);
 
         expect(newState.loading).toEqual(false);

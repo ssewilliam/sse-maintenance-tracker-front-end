@@ -15,15 +15,12 @@ export class Home extends Component {
 
   render() {
     const {
-      requests, hasRequests, loginStatus
+      requests, loginStatus, errors, loadingRequests
     } = this.props;
     return (
       <div className="container">
-        { 
-          hasRequests ?                        
-            ''
-            :
-            <Overlay />
+        {
+          loadingRequests ? <Overlay /> : ''
         }
         <div className="col-12">
           <h3 className="title">Requests</h3>
@@ -32,17 +29,16 @@ export class Home extends Component {
               <h5 className="title">Current Requests</h5>
             </div>
             {
-              !requests ?
-                NoRequest
-                :
+              requests && !errors.message ?
                 requests.map((request, index) => (
                   <div className="col-12" key={index}>
                     <div style={{display:'none'}}>{request.is_admin = loginStatus}</div>
                     <RequestItem {...request} />
                   </div>
                 ))
+                : 
+                <NoRequest/>
             }
-
           </div>
         </div>
       </div>
@@ -54,17 +50,23 @@ Home.propTypes = {
   onFetch: PropTypes.func,
   hasRequests: PropTypes.bool,
   loginStatus: PropTypes.bool,
+  loadingRequests: PropTypes.bool,
+  errors: PropTypes.object
 };
 Home.defaultProps = {
   requests: [],
   hasRequests: false,
-  loginStatus: localStorage.getItem('is_admin') || false,
+  loginStatus: localStorage.getItem('is_admin') === 'true' || false,
+  loadingRequests: true,
+  errors: {},
   onFetch: () => {}
 };
 const mapStateToProps = state => {
   return {
     requests: state.fetchRequests.requests,
-    hasRequests: state.fetchRequests.hasRequests
+    hasRequests: state.fetchRequests.hasRequests,
+    loadingRequests: state.fetchRequests.loadingRequests,
+    errors: state.fetchRequests.errors
   };
 };
 export const mapDispatchToProps = dispatch =>{

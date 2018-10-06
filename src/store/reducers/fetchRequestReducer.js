@@ -17,6 +17,7 @@ const reducer = (state = initialState, action) => {
       ...state,
       hasRequest: false,
       fetchError: {},
+      loading:true,
     };
   case REQUEST_FETCHING_SUCCESS:
     return {
@@ -24,6 +25,7 @@ const reducer = (state = initialState, action) => {
       hasRequest: true,
       request: [...action.payload],
       fetchError: {},
+      loading:false
     };
   case REQUEST_FETCHING_FAIL:
     return {

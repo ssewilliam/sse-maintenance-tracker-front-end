@@ -7,25 +7,26 @@ import Register from './containers/Register/Register';
 import SubmitRequest from './containers/Requests/SubmitRequest/SubmitRequest';
 import Navbar from './components/Navbar/Navbar';
 import SingleRequest from './containers/Requests/SingleRequest/SingleRequest';
-import EditRequest from './components/Requests/EditRequest/EditRequest';
 
 export const Routes = (props) => {
   const { loginStatus } = props;
   return (
     <BrowserRouter>
       <div>
-        { loginStatus ?
-          <Navbar />
-          : 
-          ''
+        {loginStatus ? <Navbar /> : ''}
+        { 
+          navigator.onLine ?
+            <Switch>
+              <Route path="/" exact component={ loginStatus  ? Home : Register} /> 
+              <Route path="/new-request" exact component={loginStatus ? SubmitRequest : Register} /> 
+              <Route path="/requests/:requestId" exact component={loginStatus ? SingleRequest : Register} />
+              <Redirect to="/"/>
+            </Switch>
+            :
+            setInterval(() => {
+              alert('Your device is offline, please reconnect to the internet');
+            },500)
         }
-        <Switch>
-          <Route path="/" exact component={ loginStatus  ? Home : Register} /> 
-          <Route path="/new-request" exact component={loginStatus ? SubmitRequest : Register} /> 
-          <Route path="/requests/:requestId" exact component={loginStatus ? SingleRequest : Register} />
-          <Route path="/fake" exact component={loginStatus ? EditRequest : Register} />
-          <Redirect to="/"/>
-        </Switch>
       </div>
     </BrowserRouter>
   );

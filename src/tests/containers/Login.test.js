@@ -54,7 +54,7 @@ describe('Register', () => {
       expect(wrapper.instance().onLoginSubmitEventHandler).toHaveBeenCalled();
     });
 
-    it('should call validationHandler 15 times', async () => {
+    it('should call validationHandler 14 times', async () => {
       loginUsername.instance().value = 'sampleUser';
       loginUsername.simulate('change');
       loginPassword.instance().value = 'rightPassword';
@@ -62,7 +62,7 @@ describe('Register', () => {
       wrapper.find('#loginForm').simulate('submit');
       expect(spyLoginEvent).toHaveBeenCalled();
       expect(spyValidationHandler).toHaveBeenCalled();
-      expect(spyValidationHandler).toHaveBeenCalledTimes(10);
+      expect(spyValidationHandler).toHaveBeenCalledTimes(14);
       expect(wrapper.instance().onLoginSubmitEventHandler).toHaveBeenCalled();
     });
   });

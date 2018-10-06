@@ -24,5 +24,6 @@ jobs:
           command: |
             ./cc-test-reporter before-build
             npm test -- --coverage --no-cache
+            ./cc-test-reporter after-build --exit-code $?
           environment:
             JEST_JUNIT_OUTPUT: "coverage/junit/js-test-results.xml"

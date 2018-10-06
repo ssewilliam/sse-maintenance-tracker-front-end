@@ -6,9 +6,9 @@ import moxios from 'moxios';
 import { shallow } from 'enzyme';
 import { fetchRequests } from '../../store/actions/fetchRequestsAction';
 import {
-  REQUEST_FETCHING_START,
-  REQUEST_FETCHING_SUCCESS,
-  REQUEST_FETCHING_FAIL
+  REQUEST_FETCHING_ALL_START,
+  REQUEST_FETCHING_ALL_SUCCESS,
+  REQUEST_FETCHING_ALL_FAIL
 } from '../../store/actions/actionTypes';
 import AppUrls from '../../AppUrls';
 import Home from '../../containers/Home/Home';
@@ -55,11 +55,11 @@ describe('fetchRequestActions', () => {
     });
 
     const expectedActions = [
-      { type:   REQUEST_FETCHING_START,
+      { type:   REQUEST_FETCHING_ALL_START,
       },
       {
         payload: requestsResponse.requests,
-        type: REQUEST_FETCHING_SUCCESS,
+        type: REQUEST_FETCHING_ALL_SUCCESS,
       },
     ];
     return store.dispatch(fetchRequests()).then(() => {
@@ -73,8 +73,8 @@ describe('fetchRequestActions', () => {
       response: { error: 'you have no requests' },
     });
     const expectedActions = [
-      { type: REQUEST_FETCHING_START }, 
-      { type: REQUEST_FETCHING_FAIL,
+      { type: REQUEST_FETCHING_ALL_START }, 
+      { type: REQUEST_FETCHING_ALL_FAIL,
         payload: 'errors' }];
 
     const store = mockStore();
