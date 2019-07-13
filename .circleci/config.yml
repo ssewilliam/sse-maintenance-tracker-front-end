@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:8
+      - image: circleci/node:10.16.0
     steps:
       - checkout
       - restore_cache: # special step to restore the dependency cache
@@ -10,6 +10,11 @@ jobs:
       - run:
           name: Setup Dependencies
           command: npm install
+      # - run:
+      #     name: Run vulnerability check
+      #     command: |
+      #       npm audit fix
+      #       npm audit
       - run:
           name: Setup Code Climate test-reporter
           command: |
@@ -27,3 +32,4 @@ jobs:
             ./cc-test-reporter after-build --exit-code $?
           environment:
             JEST_JUNIT_OUTPUT: "coverage/junit/js-test-results.xml"
+

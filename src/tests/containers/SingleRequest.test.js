@@ -49,7 +49,7 @@ describe('SingleRequest',() => {
       wrapper = parentWrapper.find(SingleRequest);
     });
     it('should render requests without breaking', () => {
-      expect(wrapper.find('div')).toHaveLength(4);
+      expect(wrapper.find('div')).toHaveLength(7);
     });
   });
 });
