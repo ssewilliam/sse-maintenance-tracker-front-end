@@ -12,7 +12,8 @@ it('renders without crashing', () => {
 
 it('should logout users', () => {
   const wrapper = shallow(<Navbar/>);
+  window.location.reload = jest.fn();
   wrapper.find('.nav_bar.float-right a').simulate('click');
   const username = localStorage.getItem('username');
-  expect(username).toBe(false);
+  expect(username).toBe(null);
 });

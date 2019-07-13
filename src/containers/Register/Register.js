@@ -196,7 +196,6 @@ export class Register extends Component {
   };
   onPromoteUserEventHandler = event => {
     event.preventDefault();
-    alert('here');
     const {
       onPromoteUser
     } = this.props;

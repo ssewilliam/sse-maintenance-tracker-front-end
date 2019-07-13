@@ -16,10 +16,11 @@
     "react-redux": "^5.0.7",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "1.1.5",
+    "react-scripts": "^3.0.1",
     "reactstrap": "^6.4.0",
     "redux": "^4.0.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "start-server-and-test": "^1.9.1"
   },
   "scripts": {
     "predeploy": "npm run build",
@@ -27,8 +28,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "eject": "react-scripts eject",
-    "test": "react-scripts test --env=jsdom",
-    "coverage": "react-scripts test --env=jsdom --coverage",
+    "test": "react-scripts test --env=jsdom --watchAll=false",
+    "test:dev": "react-scripts test --env=jsdom",
+    "coverage": "react-scripts test --env=jsdom --coverage --watchAll=false ",
     "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls",
     "test:watch": "npm test -- --watch",
     "now-build": "react-scripts build && mv build dist"
@@ -40,7 +42,6 @@
     "eslint": "^5.6.0",
     "eslint-plugin-jasmine": "^2.10.1",
     "eslint-plugin-jest": "^21.22.1",
-    "jest": "20.0.4",
     "redux-mock-store": "^1.5.3",
     "sinon": "^6.3.4"
   },
@@ -53,6 +54,18 @@
       "!src/setupTests.js",
       "!src/Utilities.js",
       "!src/components/Requests/EditRequest/EditRequest.js"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
     ]
   }
 }

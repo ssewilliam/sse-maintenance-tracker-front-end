@@ -37,6 +37,7 @@ describe('loginActions', () => {
         user: {}
       }
     };
+    window.location.reload = jest.fn();
     store = mockStore(initialState);
     wrapper = shallow(
       <Register store={store} />
