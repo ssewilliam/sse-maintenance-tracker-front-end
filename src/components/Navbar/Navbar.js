@@ -25,7 +25,7 @@ class Navbar extends Component {
               <div className="nav_bar float-right">
                 <ul className="nav_lists float-right">              
                   <li className="">
-                    <a href="/" onClick={() => this.logOut()}>LOG OUT</a>
+                    <a href="#" onClick={() => this.logOut()}>LOG OUT</a>
                   </li>
                 </ul>
               </div>

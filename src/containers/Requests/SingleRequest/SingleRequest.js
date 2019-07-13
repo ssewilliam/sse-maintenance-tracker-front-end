@@ -25,7 +25,7 @@ export class SingleRequest extends Component {
           <div className="row">
             {
               hasRequest === false ?
-                NoRequest
+                <NoRequest/>
                 :
                 request.map((request, index) => (
                   <div className="col-12" key={index}>
